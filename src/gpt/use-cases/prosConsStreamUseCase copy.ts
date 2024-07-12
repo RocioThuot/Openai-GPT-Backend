@@ -4,14 +4,15 @@ interface Options {
     prompt: string;
   }
 
-export const prosConsDicusserUseCase = async( openai:OpenAI,{prompt}: Options)=> {
+export const prosConsStreamUseCase = async( openai:OpenAI,{prompt}: Options)=> {
     
   if (typeof prompt !== 'string') {
     throw new Error('El prompt debe ser una cadena de texto');
   }
 
-  const response = await openai.chat.completions.create({
-    model: 'gpt-3.5-turbo-1106',
+  return await openai.chat.completions.create({
+    model: 'gpt-4',
+    stream:true,
     messages: [
       {
         role: 'system',
@@ -27,13 +28,12 @@ export const prosConsDicusserUseCase = async( openai:OpenAI,{prompt}: Options)=>
       }
     ],
     temperature: 0.8,
-    max_tokens: 500,
-    
+    max_tokens: 500
   })
       
       
 
-   return response.choices[0].message.content;
+   
   
    
 }
